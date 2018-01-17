@@ -10,7 +10,7 @@ jobs:
       - run: sudo apt-get install -y libffi-dev m4 pkg-config
 
       - run: |
-      	wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.4.0.tar.gz -O libtensorflow.tar.gz
+        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.4.0.tar.gz -O libtensorflow.tar.gz
         sudo tar -zxvf libtensorflow.tar.gz -C /usr
         rm libtensorflow.tar.gz
 
