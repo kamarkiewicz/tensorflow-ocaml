@@ -34,6 +34,7 @@ jobs:
       
       - run: |
           cd examples/basics/
+          eval $(opam config env)
           ocamlbuild forty_two.native -use-ocamlfind -pkg tensorflow -tag thread
       
       - persist_to_workspace:
