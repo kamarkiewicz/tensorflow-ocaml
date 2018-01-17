@@ -10,9 +10,9 @@ jobs:
       - run: sudo apt-get install -y libffi-dev m4 pkg-config
 
       - run: |
-        wget https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.4.0.tar.gz -O libtensorflow.tar.gz
-        sudo tar -zxvf libtensorflow.tar.gz -C /usr
-        rm libtensorflow.tar.gz
+          wget "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.4.0.tar.gz" -O libtensorflow.tar.gz
+          sudo tar -zxvf libtensorflow.tar.gz -C /usr
+          rm libtensorflow.tar.gz
 
       # Download and cache dependencies
       - restore_cache:
@@ -22,8 +22,8 @@ jobs:
           - v1-dependencies-
 
       - run: |
-        opam pin add tensorflow . -n -y
-        opam install tensorflow -v -y
+          opam pin add tensorflow . -n -y
+          opam install tensorflow -v -y
 
       - save_cache:
           paths:
@@ -31,15 +31,15 @@ jobs:
           key: v1-dependencies-{{ checksum "tensorflow.opam" }}
       
       - run: |
-        cd examples/basics/
-        ocamlbuild forty_two.native -use-ocamlfind -pkg tensorflow -tag thread
+          cd examples/basics/
+          ocamlbuild forty_two.native -use-ocamlfind -pkg tensorflow -tag thread
       
       - persist_to_workspace:
-        # Must be an absolute path, or relative path from working_directory
-        root: .
-        # Must be relative path from root
-        paths:
-          - *
+          # Must be an absolute path, or relative path from working_directory
+          root: "."
+          # Must be relative path from root
+          paths:
+            - "*"
 
   test:
     docker:
@@ -47,11 +47,11 @@ jobs:
     working_directory: ~/repo
     steps:
       - attach_workspace:
-        # Must be absolute path or relative path from working_directory
-        at: .
+          # Must be absolute path or relative path from working_directory
+          at: "."
       - run: |
-        cd examples/basics/
-        ./forty_two.native
+          cd examples/basics/
+          ./forty_two.native
 
 workflows:
   version: 2
