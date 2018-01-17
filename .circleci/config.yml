@@ -22,6 +22,7 @@ jobs:
           - v1-dependencies-
 
       - run: |
+          export TERM=dumb
           opam pin add tensorflow . -n -y
           opam install tensorflow -v -y
 
