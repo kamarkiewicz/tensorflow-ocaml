@@ -24,6 +24,7 @@ jobs:
       #     - v1-dependencies-
 
       - run: |
+          eval $(opam config env) &&
           opam pin add tensorflow . -n -y &&
           opam install tensorflow -v -y
 
@@ -35,7 +36,7 @@ jobs:
       - run: |
           eval $(opam config env) &&
           cd examples/basics/ &&
-          ocamlbuild forty_two.native -use-ocamlfind -pkg tensorflow -tag thread
+          jbuilder build forty_two.exe
       
       - persist_to_workspace:
           # Must be an absolute path, or relative path from working_directory
