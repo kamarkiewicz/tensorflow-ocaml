@@ -12,29 +12,29 @@ jobs:
       - run: sudo apt-get install -y wget libffi-dev m4 pkg-config
 
       - run: |
-          wget "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.4.0.tar.gz" -O libtensorflow.tar.gz
-          sudo tar -zxvf libtensorflow.tar.gz -C /usr
+          wget "https://storage.googleapis.com/tensorflow/libtensorflow/libtensorflow-cpu-linux-x86_64-1.4.0.tar.gz" -O libtensorflow.tar.gz &&
+          sudo tar -zxvf libtensorflow.tar.gz -C /usr &&
           rm libtensorflow.tar.gz
 
       # Download and cache dependencies
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "tensorflow.opam" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
+      # - restore_cache:
+      #     keys:
+      #     - v1-dependencies-{{ checksum "tensorflow.opam" }}
+      #     # fallback to using the latest cache if no exact match is found
+      #     - v1-dependencies-
 
       - run: |
-          opam pin add tensorflow . -n -y
+          opam pin add tensorflow . -n -y &&
           opam install tensorflow -v -y
 
-      - save_cache:
-          paths:
-            - ~/.opam
-          key: v1-dependencies-{{ checksum "tensorflow.opam" }}
+      # - save_cache:
+      #     paths:
+      #       - ~/.opam
+      #     key: v1-dependencies-{{ checksum "tensorflow.opam" }}
       
       - run: |
-          cd examples/basics/
-          eval $(opam config env)
+          eval $(opam config env) &&
+          cd examples/basics/ &&
           ocamlbuild forty_two.native -use-ocamlfind -pkg tensorflow -tag thread
       
       - persist_to_workspace:
@@ -53,7 +53,7 @@ jobs:
           # Must be absolute path or relative path from working_directory
           at: "."
       - run: |
-          cd examples/basics/
+          cd examples/basics/ &&
           ./forty_two.native
 
 workflows:
