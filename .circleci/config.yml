@@ -3,6 +3,8 @@ jobs:
   build:
     docker:
       - image: ocaml/opam:ubuntu-16.04_ocaml-4.06.0
+    environment:
+      TERM: "dumb"
     working_directory: ~/repo
     steps:
       - checkout
@@ -22,7 +24,6 @@ jobs:
           - v1-dependencies-
 
       - run: |
-          export TERM=dumb
           opam pin add tensorflow . -n -y
           opam install tensorflow -v -y
 
